@@ -1,0 +1,5 @@
+How to use
+----------
+Add this snippet to your .bashrc:
+
+    for f in ~/.bash.d/*.sh ; do . $f; done
