@@ -1,8 +1,14 @@
 vpcssh() {
     local ip; ip=$1
-    local subnet_id nat_instance_id nat_ip
+    local iid subnet_id nat_instance_id nat_ip
 
-    __usage "$ip" "vpcssh <ip>" || return 1
+    __usage "$ip" "vpcssh <ip|instance_id>" || return 1
+
+    if [ `echo "$ip" | cut -c 1-2` = "i-" ]; then
+      iid=$ip
+      ip=`curl -n "${THOR_API_ENDPOINT}/aws/${iid}.json" 2>/dev/null \
+        | jq '.private_ip' | $SED 's/"//g'`
+    fi
 
     grep -q "${ip}$" ~/.ssh/config
     if [ $? -ne 0 ]; then
