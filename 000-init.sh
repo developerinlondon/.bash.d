@@ -10,6 +10,9 @@ case `uname -s` in
 esac
 
 THOR_API_ENDPOINT="https://api.thor.nokia.com/v1"
+REPOSERVER="https://repomgr.thor.nokia.com"
+export REPOCERT="$HOME/.thor/repomgr_server.crt"
+REPOUSER=$USER
 
 __usage() {
     local var; var=$1
