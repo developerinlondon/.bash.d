@@ -1,13 +1,17 @@
 vpcssh() {
     local ip; ip=$1
-    local iid subnet_id nat_instance_id nat_ip
+    local iid subnet_id nat_instance_id nat_ip h
 
-    __usage "$ip" "vpcssh <ip|instance_id>" || return 1
+    __usage "$ip" "vpcssh <ip|instance_id|thor_hostname>" || return 1
 
     if [ `echo "$ip" | cut -c 1-2` = "i-" ]; then
       iid=$ip
       ip=`curl -n "${THOR_API_ENDPOINT}/aws/${iid}.json" 2>/dev/null \
         | jq '.private_ip' | $SED 's/"//g'`
+    elif [[ $ip = *.locn.s.nokia.com ]]; then
+      h=$ip
+      ip=`curl -n "${THOR_API_ENDPOINT}/nodes/${h}?shift=/vars/aws_ec2/privateIpAddress" 2>/dev/null \
+        | jq '.shift_result' | $SED 's/"//g'`
     fi
 
     grep -q "${ip}$" ~/.ssh/config
