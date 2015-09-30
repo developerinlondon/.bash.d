@@ -1,5 +1,6 @@
 vpcssh() {
-    local ip; ip=$1
+    local ip cmd; ip=$1
+    shift; cmd="$@"
     local iid subnet_id nat_instance_id nat_ip h
 
     __usage "$ip" "vpcssh <ip|instance_id|thor_hostname>" || return 1
@@ -26,10 +27,10 @@ vpcssh() {
           | jq '.Reservations[] | .Instances[] | .PublicIpAddress' \
           | tr -d '"' | tr -d "\n"`
 
-        echo "subnet_id       = $subnet_id"
-        echo "nat_isntance_id = $nat_instance_id"
-        echo "nat_ip          = $nat_ip"
-
+        # echo "subnet_id       = $subnet_id"
+        # echo "nat_isntance_id = $nat_instance_id"
+        # echo "nat_ip          = $nat_ip"
+        #
         if [ "x$subnet_id" = "x" ] || [ "x$nat_instance_id" = "x" ] || [ "x$nat_ip" = "x" ]; then
             echo "*** At least one AWS query failed"
             return 127
@@ -54,7 +55,11 @@ Host $ip
 EOF
     fi
 
-    ssh $ip
+    if [ "x${cmd}" = "x" ]; then
+      ssh $ip
+    else
+      ssh $ip $cmd
+    fi
 }
 
 
