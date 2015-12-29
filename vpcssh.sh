@@ -1,7 +1,7 @@
 vpcssh() {
     local ip cmd; ip=$1
     shift; cmd="$@"
-    local iid subnet_id nat_instance_id nat_ip h
+    local iid subnet_id nat_instance_id nat_ip h run
 
     __usage "$ip" "vpcssh <ip|instance_id|thor_hostname>" || return 1
 
@@ -56,9 +56,16 @@ EOF
     fi
 
     if [ "x${cmd}" = "x" ]; then
-      ssh $ip
+      run="ssh $ip"
     else
-      ssh $ip $cmd
+      run="ssh $ip $cmd"
+    fi
+    if [ "x$TMUX" != "x" ]; then
+      tmux rename-window "$ip"
+      command $run
+      tmux set-window-option automatic-rename "on" 1>/dev/null
+    else
+      command $run
     fi
 }
 
