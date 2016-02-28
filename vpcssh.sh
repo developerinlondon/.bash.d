@@ -1,9 +1,19 @@
 vpcssh() {
     local ip cmd; ip=$1
     shift; cmd="$@"
-    local iid subnet_id nat_instance_id nat_ip h run ssh
+    local iid subnet_id nat_instance_id nat_ip h run ssh now
 
     __usage "$ip" "vpcssh <ip|instance_id|thor_hostname>" || return 1
+
+    if [ "x$AWS_ACCESS_KEY_ID" = "x" ]; then
+      echo "*** AWS named profile is not loaded, please run 'awsprofile <your_named_profile>' first"
+      return 127
+    fi
+
+    if [ "x$THOR_USERNAME" = "x" ]; then
+      echo "*** THOR_USERNAME undefined, please export it in your ~/.bashrc"
+      return 127
+    fi
 
     if [ `echo "$ip" | cut -c 1-2` = "i-" ]; then
       iid=$ip
@@ -38,20 +48,24 @@ vpcssh() {
 
         grep -q $nat_ip ~/.ssh/config
         if [ $? -ne 0 ]; then
+            now=`date '+%Y-%m-%d, %H:%M'`
             cat <<EOF >> ~/.ssh/config
-# NAT host for $subnet_id
+# --> NAT host for $subnet_id, added by vpcssh on $now
 Host $nat_ip
   ForwardAgent yes
-
+  User $THOR_USERNAME
+# <--
 EOF
         fi
 
         ssh -t $nat_ip '[ -x /usr/bin/nc ] || sudo yum install -y nc'
 
         cat <<EOF >> ~/.ssh/config
+# --> added by vpcssh on $now
 Host $ip
-  ProxyCommand  ssh $nat_ip nc %h %p
-
+  User $THOR_USERNAME
+  ProxyCommand  ssh ${THOR_USERNAME}@$nat_ip nc %h %p
+# <--
 EOF
     fi
 
