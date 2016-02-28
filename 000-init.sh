@@ -24,3 +24,10 @@ __usage() {
     }
     return 0
 }
+
+bashdlist() {
+  grep -h '() {' ~/.bash.d/*.sh \
+    | grep -v grep \
+    | grep -v '#' \
+    | grep -v '^__' | cut -d'(' -f1 | sort
+}
