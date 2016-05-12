@@ -4,6 +4,6 @@ thor_get_nodes() {
     __usage "$env" "thor_get_nodes <thor_app> <thor_role> <thor_env>" || return 1
 
     curl -n "${THOR_API_ENDPOINT}/nodes/filter/app=${app}&role=${role}&env=${env}.json?shift=vars/aws_ec2/instanceId" 2>/dev/null \
-      | jq '.[] | .shift_result' | sed 's/"//g'
+      | jq '.[] | .shift_result' | gsed 's/"//g'
 
 }
