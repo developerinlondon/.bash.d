@@ -1,6 +1,6 @@
 case `uname -s` in
   Darwin)
-    SED=gsed
+    SED=sed
     AWK=gawk
   ;;
   Linux)
@@ -28,6 +28,7 @@ bashdlist() {
 }
 
 install_core() {
+  echo source ~/.profile >> ~/.bash_profile
   # install rvm
   \curl -sSL https://get.rvm.io | bash
   rvm install 2.1.2
@@ -49,13 +50,12 @@ install_core() {
   # gnu
   brew install coreutils
   brew install binutils
-  brew install diffutils
-  brew install findutils --with-default-names
+  brew install findutils
   brew install gawk
-  brew install gnu-indent --with-default-names
-  brew install gnu-sed --with-default-names
-  brew install gnu-tar --with-default-names
-  brew install gnu-which --with-default-names
+  brew install gnu-indent
+  brew install gnu-sed
+  brew install gnu-tar
+  brew install gnu-which
   brew install gnutls
     brew install watch
   brew install wdiff --with-gettext
@@ -91,7 +91,7 @@ install_core() {
   brew cask install daisydisk
   brew cask install packer
   brew cask install viber
-  brew cask install kindle-previewer
+  brew cask install kindlepreviewer
   brew cask install pokerstars
   brew cask install limechat
   brew cask install adobe-reader
@@ -122,6 +122,9 @@ install_core() {
   brew install tree
 
 
+  mkdir -p ~/.aws
+  touch ~/.aws/config
+
   # install awscli
   brew install pip
   curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
@@ -137,4 +140,9 @@ install_core() {
   pip install -U docker-compose
   brew cask install kitematic
   brew cask install docker-machine
+
+  brew cask install adobe-photoshop-cc
+  brew cask install adobe-illustrator-cc
+  brew cask install adobe-acrobat
+  brew cask install amazon-drive
 }

@@ -32,8 +32,5 @@ awsprofile() {
    [ "x$region" != "x" ] && export AWS_DEFAULT_REGION=$region
 }
 
-mkdir -p ~/.aws
-touch ~/.aws/config
-
 awscli_profiles=`grep '\[profile' ~/.aws/config | $SED 's/\[profile \(.*\)\]/\1/'`
 complete -W "$awscli_profiles" awsprofile

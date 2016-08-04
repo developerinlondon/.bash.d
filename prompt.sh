@@ -51,13 +51,14 @@ function _set_git_envar_info {
     GIT_LEADER=""
     local STATUS
     STATUS=$(git status 2> /dev/null)
+    #STATUS="status:"
     if [[ -z $STATUS ]]
     then
         return
     fi
     GIT_LEADER=":"
     GIT_BRANCH="$(git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
-    GIT_HEAD=":$(git rev-parse --short HEAD)"
+    GIT_HEAD=":$(git rev-parse --short HEAD 2> /dev/null)"
     if [[ "$STATUS" == *'working directory clean'* ]]
     then
         GIT_STATE=""
@@ -78,8 +79,8 @@ function _set_git_envar_info {
         fi
         GIT_STATE=$GIT_STATE''
     fi
-    gdir=$(cd $GIT_ROOT; pwd -P)
-    export gdir
+    # gdir=$(cd $GIT_ROOT; pwd -P)
+    # export gdir
 }
 
 ###############################################################################
