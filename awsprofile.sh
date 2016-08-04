@@ -29,8 +29,6 @@ awsprofile() {
    export AWS_ACCESS_KEY_ID=$access_key
    export AWS_SECRET_ACCESS_KEY=$access_secret
 
-   echo -e "[DynamoDB]\nregion = $region" > ~/.boto
-
    [ "x$region" != "x" ] && export AWS_DEFAULT_REGION=$region
 }
 
