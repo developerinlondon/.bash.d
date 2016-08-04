@@ -50,14 +50,17 @@ install_core() {
   # gnu
   brew install coreutils
   brew install binutils
-  brew install findutils
+  brew install findutils --with-default-names
   brew install gawk
-  brew install gnu-indent
+  brew install gnu-indent --with-default-names
   brew install gnu-sed
+#  brew install gnu-sed --with-default-names
+#  brew install gnu-tar --with-default-names
   brew install gnu-tar
+#  brew install gnu-which --with-default-names
   brew install gnu-which
   brew install gnutls
-    brew install watch
+  brew install watch
   brew install wdiff --with-gettext
   brew install wget
   brew install bash
