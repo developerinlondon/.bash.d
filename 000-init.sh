@@ -123,7 +123,7 @@ install_core() {
   brew install ack
   brew install links
   brew install tree
-
+  brew install terraform
 
   mkdir -p ~/.aws
   touch ~/.aws/config
