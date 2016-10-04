@@ -148,4 +148,8 @@ install_core() {
   brew cask install adobe-illustrator-cc
   brew cask install adobe-acrobat
   brew cask install amazon-drive
+  
+  # install gpg
+  brew cask install gpgtools
+  
 }
