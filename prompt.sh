@@ -111,10 +111,10 @@ function setps1 {
     local GIT_STATE_COLOR=$CLEAR'\[\033[1;31m\]'
 
     # Hostname-based colors in prompt.
-    if [[ $HOSTNAME != $PRIMARYHOST ]]
-    then
-        USER_HOST_COLOR=$REMOTE_USER_HOST_COLOR
-    fi
+    # if [[ $HOSTNAME != $PRIMARYHOST ]]
+    # then
+    #     USER_HOST_COLOR=$REMOTE_USER_HOST_COLOR
+    # fi
 
     # Start with empty prompt.
     local PROMPTSTR=""

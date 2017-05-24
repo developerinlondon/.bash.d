@@ -76,6 +76,12 @@ install_core() {
   brew install vim --override-system-vi
   brew install zsh
 
+  # install bash-completion
+  brew install bash-completion
+  brew tap homebrew/completions
+  CONTENT='[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion'
+  grep -q -F "${CONTENT}" ~/.bash_profile || echo "${CONTENT}" >> ~/.bash_profile
+
   # install virtualbox + vagrant
   brew cask install virtualbox
   brew cask install vagrant
@@ -107,7 +113,6 @@ install_core() {
   #echo "source /usr/local/etc/bash_completion.d/password-store" >> ~/.bashrc
   brew cask install dropbox
   brew cask install disk-inventory-x
-
 
   brew install ansible
   gem install thor parseconfig
@@ -148,8 +153,9 @@ install_core() {
   brew cask install adobe-illustrator-cc
   brew cask install adobe-acrobat
   brew cask install amazon-drive
-  
+
   # install gpg
   brew cask install gpgtools
-  
+  brew install gnupg2
+  brew link --overwrite gnupg
 }
