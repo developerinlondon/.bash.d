@@ -31,7 +31,7 @@ install_core() {
   echo source ~/.profile >> ~/.bash_profile
   # install rvm
   \curl -sSL https://get.rvm.io | bash
-  rvm install 2.1.2
+  rvm install 2.4.0
 
   # install cpanmin.us
   \curl -L http://cpanmin.us  | perl - App::cpanminus --sudo
