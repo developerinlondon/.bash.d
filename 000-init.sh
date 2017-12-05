@@ -1,7 +1,7 @@
 case `uname -s` in
   Darwin)
     SED=sed
-    AWK=gawk
+    AWK=awk
   ;;
   Linux)
     SED=sed
@@ -66,12 +66,12 @@ install_core() {
   brew install findutils --with-default-names
   brew install gawk
   brew install gnu-indent --with-default-names
-  brew install gnu-sed
-#  brew install gnu-sed --with-default-names
-#  brew install gnu-tar --with-default-names
-  brew install gnu-tar
-#  brew install gnu-which --with-default-names
-  brew install gnu-which
+#  brew install gnu-sed
+  brew install gnu-sed --with-default-names
+  brew install gnu-tar --with-default-names
+#  brew install gnu-tar
+  brew install gnu-which --with-default-names
+#  brew install gnu-which
   brew install gnutls
   brew install watch
   brew install wdiff --with-gettext
