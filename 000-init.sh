@@ -27,6 +27,19 @@ bashdlist() {
     | grep -v '^__' | cut -d'(' -f1 | sort
 }
 
+install_bash_completion() {
+
+  # install bash-completion
+  brew install bash-completion
+  brew tap homebrew/completions
+  CONTENT='[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion'
+  grep -q -F "${CONTENT}" ~/.bash_profile || echo "${CONTENT}" >> ~/.bash_profile
+  brew install vagrant-completion
+  CONTENT='[ -f `brew --prefix`/etc/bash_completion.d/vagrant ] &&  source `brew --prefix`/etc/bash_completion.d/vagrant'
+  grep -q -F "${CONTENT}" ~/.bash_profile || echo "${CONTENT}" >> ~/.bash_profile
+  
+}
+
 install_core() {
   echo source ~/.profile >> ~/.bash_profile
   # install rvm
@@ -75,12 +88,6 @@ install_core() {
   brew install svn
   brew install vim --override-system-vi
   brew install zsh
-
-  # install bash-completion
-  brew install bash-completion
-  brew tap homebrew/completions
-  CONTENT='[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion'
-  grep -q -F "${CONTENT}" ~/.bash_profile || echo "${CONTENT}" >> ~/.bash_profile
 
   # install virtualbox + vagrant
   brew cask install virtualbox
@@ -132,6 +139,8 @@ install_core() {
 
   mkdir -p ~/.aws
   touch ~/.aws/config
+
+  install_bash_completion
 
   # install awscli
   brew install pip
